@@ -65,4 +65,10 @@ public class StudentController {
     public ResponseEntity<List<Student>> grtLastStudents() {
         return ResponseEntity.ok(service.getLastStudents());
     }
+
+    @GetMapping("/students/name/{name}")
+    public ResponseEntity<List<Student>> getStudentsByName(@PathVariable String name) {
+        List<Student> students = service.getStudentsByName(name);
+        return ResponseEntity.ok(students);
+    }
 }
