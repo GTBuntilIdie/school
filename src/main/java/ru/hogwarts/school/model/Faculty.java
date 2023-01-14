@@ -2,9 +2,8 @@ package ru.hogwarts.school.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 import java.util.Objects;
 
 @Data
@@ -16,38 +15,17 @@ public class Faculty {
     private String name;
     private String color;
 
-    public Faculty(String name, String color) {
-        this.name = name;
-        this.color = color;
-    }
-
-    public Faculty() {
-
-    }
-
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getColor() {
         return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     @Override
@@ -71,5 +49,4 @@ public class Faculty {
                 ", color='" + color + '\'' +
                 '}';
     }
-
 }
