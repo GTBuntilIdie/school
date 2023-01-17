@@ -47,11 +47,6 @@
 			<version>1.6.11</version>
 		</dependency>
 		<dependency>
-			<groupId>dev.the-fireplace</groupId>
-			<artifactId>Erroring-Entity-Remover</artifactId>
-			<version>1.0.2+1.18</version>
-		</dependency>
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
