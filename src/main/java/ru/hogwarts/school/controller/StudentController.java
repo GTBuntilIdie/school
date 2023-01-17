@@ -4,7 +4,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
-import ru.hogwarts.school.model.StudentList;
 import ru.hogwarts.school.service.StudentService;
 import java.util.Collection;
 import java.util.List;
@@ -14,9 +13,12 @@ import java.util.List;
 @RequestMapping("student")
 public class StudentController {
     private final StudentService service;
+
     public StudentController(StudentService service) {
         this.service = service;
+
     }
+
     @PostMapping
     public Student createStudent(@RequestBody Student student) {
         return service.createStudent(student);
@@ -70,5 +72,13 @@ public class StudentController {
     public ResponseEntity<List<Student>> getStudentsByName(@PathVariable String name) {
         List<Student> students = service.getStudentsByName(name);
         return ResponseEntity.ok(students);
+    }
+    @GetMapping("/names/{letter}")
+    public ResponseEntity<List<String>> getNamesStartingWithA(@PathVariable String letter) {
+        return ResponseEntity.ok(service.getNameStarWithA(letter));
+    }
+    @GetMapping("/studentage")
+    public Double getAverageAgeByStreamApi() {
+        return service.getAverageAgeByStreamApi();
     }
 }
