@@ -4,11 +4,19 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.hogwarts.school.service.StudentService;
 
 import java.util.stream.Stream;
 
 @RestController
 public class InfoController {
+
+    private StudentService studentService;
+
+    public InfoController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
     @Value("${server.port}")
     private String port;
 
@@ -25,5 +33,13 @@ public class InfoController {
                 .parallel()
                 .reduce(0, (a, b) -> a + b );
         return sum;
+    }
+    @GetMapping("/nmaesThread")
+    public void geThreadStudentNames() {
+        studentService.getThreadStudentNames();
+    }
+    @GetMapping("/nmaesThreadSynchronized")
+    public void getSyncThreadNames() {
+        studentService.getSynchronizedThreadStudentNames();
     }
 }

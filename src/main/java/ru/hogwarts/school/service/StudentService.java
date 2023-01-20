@@ -94,4 +94,38 @@ public class StudentService {
                 .getAsDouble();
     }
 
+    public void getThreadStudentNames() {
+        List<String> studentsNames = studentRepository.findAll().stream()
+                .map(user -> user.getName())
+                .collect(Collectors.toList());
+        System.out.println(studentsNames.get(0));
+        System.out.println(studentsNames.get(1));
+
+        new Thread(() -> {
+            System.out.println(studentsNames.get(2));
+            System.out.println(studentsNames.get(3));
+        }).start();
+        new Thread(() -> {
+            System.out.println(studentsNames.get(4));
+            System.out.println(studentsNames.get(5));
+        }).start();
+    }
+    public void getSynchronizedThreadStudentNames() {
+        List<String> studentsNames = studentRepository.findAll().stream()
+                .map(user -> user.getName())
+                .collect(Collectors.toList());
+        synchronized (StudentService.class) {
+            System.out.println(studentsNames.get(0));
+            System.out.println(studentsNames.get(1));
+            new Thread(() -> {
+                System.out.println(studentsNames.get(2));
+                System.out.println(studentsNames.get(3));
+            }).start();
+            new Thread(() -> {
+                System.out.println(studentsNames.get(4));
+                System.out.println(studentsNames.get(5));
+            }).start();
+        }
+    }
+
 }
