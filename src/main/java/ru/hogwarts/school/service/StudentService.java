@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
+
+    private int count = 0;
     private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository studentRepository) {
@@ -94,4 +96,22 @@ public class StudentService {
                 .getAsDouble();
     }
 
+    public void getThreadStudentNames() {
+        List<Student> students = studentRepository.findAll();
+        PrintNamesSync(students, 0);
+        PrintNamesSync(students, 2);
+        new Thread(() -> {
+            PrintNamesSync(students, 2);
+            PrintNamesSync(students, 3);
+        }).start();
+        new Thread(() -> {
+            PrintNamesSync(students, 4);
+            PrintNamesSync(students, 5);
+        }).start();
+    }
+    public synchronized void PrintNamesSync(List<Student> students, int number) {
+        String name = students.get(number).getName();
+        count++;
+        System.out.println("name = " + name + "count: " + count);
+    }
 }
