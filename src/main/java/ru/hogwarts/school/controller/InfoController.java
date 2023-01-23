@@ -40,6 +40,6 @@ public class InfoController {
     }
     @GetMapping("/nmaesThreadSynchronized")
     public void getSyncThreadNames() {
-        studentService.getSynchronizedThreadStudentNames();
+        studentService.getThreadStudentNames();
     }
 }

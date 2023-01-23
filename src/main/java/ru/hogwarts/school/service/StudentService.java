@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
+
+    private int count = 0;
     private final StudentRepository studentRepository;
 
     public StudentService(StudentRepository studentRepository) {
@@ -95,37 +97,21 @@ public class StudentService {
     }
 
     public void getThreadStudentNames() {
-        List<String> studentsNames = studentRepository.findAll().stream()
-                .map(user -> user.getName())
-                .collect(Collectors.toList());
-        System.out.println(studentsNames.get(0));
-        System.out.println(studentsNames.get(1));
-
+        List<Student> students = studentRepository.findAll();
+        PrintNamesSync(students, 0);
+        PrintNamesSync(students, 2);
         new Thread(() -> {
-            System.out.println(studentsNames.get(2));
-            System.out.println(studentsNames.get(3));
+            PrintNamesSync(students, 2);
+            PrintNamesSync(students, 3);
         }).start();
         new Thread(() -> {
-            System.out.println(studentsNames.get(4));
-            System.out.println(studentsNames.get(5));
+            PrintNamesSync(students, 4);
+            PrintNamesSync(students, 5);
         }).start();
     }
-    public void getSynchronizedThreadStudentNames() {
-        List<String> studentsNames = studentRepository.findAll().stream()
-                .map(user -> user.getName())
-                .collect(Collectors.toList());
-        synchronized (StudentService.class) {
-            System.out.println(studentsNames.get(0));
-            System.out.println(studentsNames.get(1));
-            new Thread(() -> {
-                System.out.println(studentsNames.get(2));
-                System.out.println(studentsNames.get(3));
-            }).start();
-            new Thread(() -> {
-                System.out.println(studentsNames.get(4));
-                System.out.println(studentsNames.get(5));
-            }).start();
-        }
+    public synchronized void PrintNamesSync(List<Student> students, int number) {
+        String name = students.get(number).getName();
+        count++;
+        System.out.println("name = " + name + "count: " + count);
     }
-
 }
